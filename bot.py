@@ -10,7 +10,6 @@ BOT_TOKEN = os.getenv('BOT_TOKEN')
 updater = Updater(BOT_TOKEN, use_context=True)
 dispatcher = updater.dispatcher
 
-
 def hello(update: Update, context: CallbackContext):
     update.message.reply_text(f'Hello {update.effective_user.first_name}')
 
@@ -50,12 +49,10 @@ def unknown(update, context):
 
 
 def echo(update, context):
-    print(update)
     context.bot.send_message(chat_id=update.effective_chat.id, text=update.message.text)
 
 
 def chat(update, context):
-    print(update)
     context.bot.send_message()
 
 

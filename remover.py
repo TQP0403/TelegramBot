@@ -11,13 +11,11 @@ load_dotenv()
 API_ID = os.getenv('API_ID')
 API_HASH = os.getenv('API_HASH')
 PHONE = os.getenv('PHONE')
+USER_NAME = os.getenv('USER_NAME')
 
-client = TelegramClient(PHONE, API_ID, API_HASH)
+client = TelegramClient(USER_NAME, API_ID, API_HASH)
 
 client.connect()
-if not client.is_user_authorized():
-    client.send_code_request(PHONE)
-    client.sign_in(PHONE, input('Enter the code: '))
 
 last_date = None
 chunk_size = 200

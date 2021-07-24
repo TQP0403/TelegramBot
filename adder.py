@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from telethon.sync import TelegramClient
 from telethon.tl.functions.messages import GetDialogsRequest
-from telethon.tl.types import InputPeerEmpty, InputPeerChannel
+from telethon.tl.types import InputPeerEmpty, InputPeerChannel, InputUser
 from telethon.tl.functions.channels import InviteToChannelRequest
 from telethon.errors.rpcerrorlist import PeerFloodError, UserPrivacyRestrictedError
 
@@ -10,7 +10,7 @@ load_dotenv()
 
 API_ID = os.getenv('API_ID')
 API_HASH = os.getenv('API_HASH')
-PHONE = os.getenv('PHONE')
+PHONE = os.getenv('PHONE1')
 
 client = TelegramClient(PHONE, API_ID, API_HASH)
 
@@ -37,7 +37,7 @@ chats.extend(result.chats)
 
 for chat in chats:
     try:
-        if chat.megagroup == True:
+        if chat.megagroup:
             groups.append(chat)
     except:
         continue
@@ -62,6 +62,7 @@ participants = client.get_participants(main_group, aggressive=True)
 
 for user in participants:
     print(user)
+    user_entity = client.get_input_entity(user)
     user_to_add.append(client.get_input_entity(user))
 
 client(InviteToChannelRequest(target_group_entity, user_to_add))
